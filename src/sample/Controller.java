@@ -36,8 +36,9 @@ public class Controller {
     private CheckBox colorCheckBox;
 
     private final int width = 700, height = 500;
+    private final double defaultx0 = -2, defaulty0 = -2, defaultx1 = 2, defaulty1 = 2;
 
-    private double x0 = -2, y0 = -2, x1 = 2, y1 = 2;
+    private double x0 = defaultx0, y0 = defaulty0, x1 = defaultx1, y1 = defaulty1;
     private double xcoef = (width - 1) / (x1 - x0), ycoef = (height - 1) / (y0 - y1);
     private double xshift = -xcoef * x0, yshift = -ycoef * y1;
     private double begX = 0, begY = 0, endX = 0, endY = 0;
@@ -55,6 +56,10 @@ public class Controller {
             k = sliderK.getValue();
             iterations = iterationsField.getText().equals("") ? 256 : Integer.parseInt(iterationsField.getText());
             mode = colorCheckBox.isSelected() ? Utils.MODE_COLOR : Utils.MODE_GRAY;
+            x0 = defaultx0;
+            y0 = defaulty0;
+            x1 = defaultx1;
+            y1 = defaulty1;
             img = Utils.calc(z0, (int)k, iterations, x0, y0, x1, y1, mode);
             bgimg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                                              BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
