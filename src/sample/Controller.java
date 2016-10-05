@@ -1,16 +1,21 @@
 package sample;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
 public class Controller {
 
@@ -35,6 +40,8 @@ public class Controller {
     @FXML
     private CheckBox colorCheckBox;
 
+    private static Main main;
+
     private final int width = 700, height = 500;
     private final double defaultx0 = -2, defaulty0 = -2, defaultx1 = 2, defaulty1 = 2;
 
@@ -49,9 +56,13 @@ public class Controller {
     private BackgroundImage bgimg;
     private int mode;
 
+    public static void setMain(Main newMain) {
+        main = newMain;
+    }
+
     @FXML
     private void onButtonClicked(ActionEvent event) {
-        if(event.getSource() == buttonDraw) {
+        if(event.getSource().equals(buttonDraw)) {
             z0 = new Complex(sliderReZ0.getValue(), sliderImZ0.getValue());
             k = sliderK.getValue();
             iterations = iterationsField.getText().equals("") ? 256 : Integer.parseInt(iterationsField.getText());
@@ -65,7 +76,25 @@ public class Controller {
                                              BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             anchorPane.setBackground(new Background(bgimg));
         }
-        else if(event.getSource() == buttonSave) {
+        else if(event.getSource().equals(buttonSave)) {
+            DirectoryChooser chooser = new DirectoryChooser();
+            chooser.setTitle("Select directory to save the image");
+            File selected = chooser.showDialog(main.getStage());
+            if((selected == null) || (!selected.isDirectory())) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Selected file is not directory", ButtonType.CLOSE);
+                alert.show();
+            }
+            else {
+                File imagefile = new File(selected, "image-" + Complex.toString(z0) + "-" + Double.toString(k) +
+                                                        "-(" + Double.toString(x0) + ";" + Double.toString(y0) + ")-(" +
+                                                               Double.toString(x1) + ";" + Double.toString(y1) + ").png");
+                try {
+                    ImageIO.write(SwingFXUtils.fromFXImage(img, null), "PNG", imagefile);
+                }
+                catch(IOException ioe) {
+                    ioe.printStackTrace();
+                }
+            }
         }
     }
 

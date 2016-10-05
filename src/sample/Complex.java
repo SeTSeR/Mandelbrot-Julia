@@ -64,6 +64,14 @@ public class Complex {
         return z0;
     }
 
+    public String toString() {
+        return real + "+" + imagine + "*i";
+    }
+
+    public static String toString(Complex number) {
+        return number.toString();
+    }
+
     public void print() {
         System.out.print(real);
         if(imagine > -0.000001) System.out.print("+");

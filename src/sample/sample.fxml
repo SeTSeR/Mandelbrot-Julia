@@ -21,7 +21,7 @@
         <Slider fx:id="sliderImZ0" blockIncrement="0.001" layoutX="54.0" layoutY="560.0" max="2.0" min="-2.0" />
         <Slider fx:id="sliderK" blockIncrement="1.0" layoutX="199.0" layoutY="544.0" max="10.0" min="1.0" />
         <Button fx:id="buttonDraw" layoutX="435.0" layoutY="574.0" mnemonicParsing="false" onAction="#onButtonClicked" text="Draw!" />
-        <Button fx:id="buttonSave" layoutX="488.0" layoutY="574.0" mnemonicParsing="false" text="Save" />
+        <Button fx:id="buttonSave" layoutX="488.0" layoutY="574.0" mnemonicParsing="false" onAction="#onButtonClicked" text="Save" />
       <TextField fx:id="iterationsField" layoutX="14.0" layoutY="574.0" promptText="Iterations(default 256):" />
       <Label layoutX="189.0" layoutY="542.0" text="K:" />
       <CheckBox fx:id="colorCheckBox" layoutX="613.0" layoutY="542.0" mnemonicParsing="false" text="Colors" />
